@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Online PHP Tester for romainnorberg/residue</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <h1 class="title">
+            Online PHP Tester for romainnorberg/residue (beta)
+        </h1>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <form id="form" onsubmit="return false;">
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Value</label>
+                        <div class="control">
+                            <input class="input" type="number" name="r-value" placeholder="Value" value="100" step="0.0000001" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Divide by</label>
+                        <div class="control">
+                            <input class="input" type="number" name="r-divide-by" placeholder="Divide by" value="3" min="1" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Decimal</label>
+                        <div class="control">
+                            <input class="input" type="number" name="r-decimal" placeholder="Decimal" value="2" step="1" min="0" max="10">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Step</label>
+                        <div class="control">
+                            <input class="input" type="number" name="r-step" placeholder="Step" value="" step="0.001">
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="bd-snippet">
+                        <pre id="code"></pre>
+                    </div>
+
+                    <hr/>
+                    <a href="#" class="button" id="submit-btn">Run</a>
+                </div>
+            </div>
+            <script>
+              var form = document.getElementById('form');
+              var xhr = new XMLHttpRequest();
+              var submitBtn = document.getElementById('submit-btn');
+
+              function generateCode() {
+                var formElements = form.elements;
+                var code = '';
+
+                for (var i = 0, formElements; element = formElements[i++];) {
+                  if (element.value !== "") {
+                    switch (element.name) {
+                      case 'r-value':
+                        code += "Residue::create(" + element.value + ")\n";
+                        break;
+                      case 'r-divide-by':
+                        code += "    ->divideBy(" + element.value + ")\n";
+                        break;
+                      case 'r-decimal':
+                        code += "    ->decimal(" + element.value + ")\n";
+                        break;
+                      case 'r-step':
+                        code += "    ->step(" + element.value + ")\n";
+                        break;
+                    }
+                  }
+                }
+                //code += ';';
+                document.getElementById('code').innerHTML = code;
+              }
+
+              function request() {
+                xhr.abort();
+                var resultContainer = document.getElementById('result');
+
+                xhr.open('POST', 'api.php', false);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.onload = function () {
+                  if (xhr.status == 200) {
+                    resultContainer.innerHTML = xhr.response;
+                  }
+                };
+                xhr.send('code=' + document.getElementById('code').innerText);
+              }
+
+              function refresh() {
+                generateCode();
+                request();
+              }
+
+              window.onload = function (e) {
+                refresh();
+
+                // Events
+                form.addEventListener("change", refresh, false);
+                form.addEventListener("keyup", refresh, false);
+                submitBtn.addEventListener("click", function (e) {
+                  refresh();
+                });
+              }
+            </script>
+            <div id="result"></div>
+        </form>
+    </div>
+</section>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            <a href="https://github.com/romainnorberg/residue" target="_blank">https://github.com/romainnorberg/residue</a>
+        </p>
+        <p>
+            Installed version: <a href="https://github.com/romainnorberg/residue/releases/tag/v0.3.1" target="_blank">v0.3.1</a>
+        </p>
+    </div>
+</footer>
+<style>
+  .bd-snippet::before {
+    background: #ffdd57;
+    border-radius: 2px 2px 0 0;
+    bottom: 100%;
+    color: rgba(0, 0, 0, .7);
+    content: "Snippet";
+    display: inline-block;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-left: -1px;
+    padding: 3px 5px;
+    text-transform: uppercase;
+    vertical-align: top;
+  }
+</style>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+    "name": "romainnorberg/residue-online-php-tester",
+    "require": {
+        "romainnorberg/residue": "v0.3.1"
+    },
+    "authors": [
+        {
+            "name": "Norberg",
+            "email": "romainnorberg@gmail.com"
+        }
+    ]
+}

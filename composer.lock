@@ -1,0 +1,72 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "045e8d1928675ef9952fe56ac16ce6fc",
+    "packages": [
+        {
+            "name": "romainnorberg/residue",
+            "version": "v0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/romainnorberg/residue.git",
+                "reference": "c5cacd0517522803cc2d07485caee99f465270fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/romainnorberg/residue/zipball/c5cacd0517522803cc2d07485caee99f465270fd",
+                "reference": "c5cacd0517522803cc2d07485caee99f465270fd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "phpstan/phpstan": "^0.12.49",
+                "phpunit/phpunit": "^8.0",
+                "spatie/phpunit-watcher": "^1.22"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Romainnorberg\\Residue\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Romain Norberg",
+                    "email": "romainnorberg@gmail.com"
+                }
+            ],
+            "description": "Divide a float into several parts, with distribution of any remainder",
+            "keywords": [
+                "php",
+                "residue",
+                "split"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/romainnorberg",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-10-14T04:36:54+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
+}
