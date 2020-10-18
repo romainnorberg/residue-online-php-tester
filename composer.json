@@ -1,6 +1,7 @@
 {
     "name": "romainnorberg/residue-online-php-tester",
     "require": {
+        "ext-mbstring": "*",
         "romainnorberg/residue": "v0.3.2"
     },
     "authors": [

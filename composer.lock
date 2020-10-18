@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c38badb75e141109533c171bf2a97f4",
+    "content-hash": "27909d855c3c14062eadae5372d6ce73",
     "packages": [
         {
             "name": "romainnorberg/residue",
@@ -73,7 +73,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-mbstring": "*"
+    },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"
 }
