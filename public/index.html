@@ -4,14 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Online PHP Tester for romainnorberg/residue</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
 </head>
 <body>
 <section class="section">
     <div class="container">
         <h1 class="title">
-            Online PHP Tester for romainnorberg/residue (beta)
+            Online PHP Tester for <a href="https://github.com/romainnorberg/residue" target="_blank">romainnorberg/residue</a>
+            packages (beta)
         </h1>
+        <p>
+            Installed version: <a href="https://github.com/romainnorberg/residue/releases/tag/v0.3.2" target="_blank">v0.3.2</a>
+        </p>
     </div>
 </section>
 <section class="section">
@@ -34,13 +39,23 @@
                     <div class="field">
                         <label class="label">Decimal</label>
                         <div class="control">
-                            <input class="input" type="number" name="r-decimal" placeholder="Decimal" value="2" step="1" min="0" max="10">
+                            <input class="input" type="number" name="r-decimal" id="js-decimal" placeholder="Decimal" value="2" step="1" min="0" max="10">
                         </div>
                     </div>
                     <div class="field">
                         <label class="label">Step</label>
                         <div class="control">
                             <input class="input" type="number" name="r-step" placeholder="Step" value="" step="0.001">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Split mode
+                            <small>(<a href="https://github.com/romainnorberg/residue#split-mode">doc</a>)</small></label>
+                        <div class="control select">
+                            <select name="r-split-mode" id="js-split-mode">
+                                <option value="SPLIT_MODE_ALLOCATE">Allocate (default)</option>
+                                <option value="SPLIT_MODE_EQUITY">Equity</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -57,45 +72,62 @@
               var form = document.getElementById('form');
               var xhr = new XMLHttpRequest();
               var submitBtn = document.getElementById('submit-btn');
+              var code = '';
 
               function generateCode() {
                 var formElements = form.elements;
-                var code = '';
+                code = '';
+                var snippedCode = '';
 
                 for (var i = 0, formElements; element = formElements[i++];) {
                   if (element.value !== "") {
                     switch (element.name) {
                       case 'r-value':
                         code += "Residue::create(" + element.value + ")\n";
+                        snippedCode += "Residue::create(" + element.value + ")\n";
                         break;
                       case 'r-divide-by':
                         code += "    ->divideBy(" + element.value + ")\n";
-                        break;
-                      case 'r-decimal':
-                        code += "    ->decimal(" + element.value + ")\n";
+                        snippedCode += "    ->divideBy(" + element.value + ")\n";
                         break;
                       case 'r-step':
                         code += "    ->step(" + element.value + ")\n";
+                        snippedCode += "    ->step(" + element.value + ")\n";
+                        break;
+                      case 'r-decimal':
+                        code += "    ->decimal(" + element.value + ")\n";
+                        snippedCode += "    ->decimal(" + element.value + ")\n";
+                        break;
+                      case 'r-split-mode':
+                        snippedCode += "    ->split(Residue::" + element.value + ")";
                         break;
                     }
                   }
                 }
-                //code += ';';
-                document.getElementById('code').innerHTML = code;
+                snippedCode += ';'
+                document.getElementById('code').innerHTML = snippedCode;
               }
 
               function request() {
                 xhr.abort();
-                var resultContainer = document.getElementById('result');
+                var splitMode = document.getElementById('js-split-mode');
 
-                xhr.open('POST', 'api.php', false);
+                xhr.responseType = 'json';
+                xhr.open('POST', 'api.php', true);
                 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhr.onload = function () {
+                  var response = xhr.response;
                   if (xhr.status == 200) {
-                    resultContainer.innerHTML = xhr.response;
+                    document.getElementById('js-response-result').innerHTML = response.result;
+                    document.getElementById('js-response-remainder').innerHTML = response.remainder;
+                    document.getElementById('js-response-total').innerHTML = response.total;
                   }
                 };
-                xhr.send('code=' + document.getElementById('code').innerText);
+                xhr.send(new URLSearchParams({
+                  code:      code,
+                  decimal:   document.getElementById('js-decimal').value,
+                  splitMode: splitMode.options[splitMode.selectedIndex].value
+                }).toString());
               }
 
               function refresh() {
@@ -114,17 +146,35 @@
                 });
               }
             </script>
+            <section class="hero is-light">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 class="title">
+                            <span id="js-response-result"></span>
+                        </h1>
+                        <h2 class="subtitle">
+                            <p>Remainder: <span id="js-response-remainder"></span></p>
+                            <p><small>Total: <span id="js-response-total"></span></small></p>
+                        </h2>
+                    </div>
+                </div>
+            </section>
             <div id="result"></div>
         </form>
     </div>
 </section>
+<hr/>
+
+<div class="container">
+
+    <img src="https://github.com/romainnorberg/residue/raw/master/.github/media/readme.jpg?raw=true" align="center" alt="Residue Package - Illustration credit: https://refactoring.guru/" width="100%" height="100%">
+    <zero-md src="https://raw.githubusercontent.com/romainnorberg/residue/master/README.md"></zero-md>
+
+</div>
 <footer class="footer">
     <div class="content has-text-centered">
         <p>
             <a href="https://github.com/romainnorberg/residue" target="_blank">https://github.com/romainnorberg/residue</a>
-        </p>
-        <p>
-            Installed version: <a href="https://github.com/romainnorberg/residue/releases/tag/v0.3.1" target="_blank">v0.3.1</a>
         </p>
     </div>
 </footer>
@@ -145,5 +195,11 @@
     vertical-align: top;
   }
 </style>
+
+<!-- Lightweight client-side loader that feature-detects and load polyfills only when necessary -->
+<script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
+<!-- Load the element definition -->
+<script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
+
 </body>
 </html>

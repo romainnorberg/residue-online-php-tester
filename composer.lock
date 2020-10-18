@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "045e8d1928675ef9952fe56ac16ce6fc",
+    "content-hash": "0c38badb75e141109533c171bf2a97f4",
     "packages": [
         {
             "name": "romainnorberg/residue",
-            "version": "v0.3.1",
+            "version": "v0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/romainnorberg/residue.git",
-                "reference": "c5cacd0517522803cc2d07485caee99f465270fd"
+                "reference": "51dde47f7277b617a893cac7f2b85b683dd17e46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/romainnorberg/residue/zipball/c5cacd0517522803cc2d07485caee99f465270fd",
-                "reference": "c5cacd0517522803cc2d07485caee99f465270fd",
+                "url": "https://api.github.com/repos/romainnorberg/residue/zipball/51dde47f7277b617a893cac7f2b85b683dd17e46",
+                "reference": "51dde47f7277b617a893cac7f2b85b683dd17e46",
                 "shasum": ""
             },
             "require": {
@@ -42,7 +42,14 @@
             "authors": [
                 {
                     "name": "Romain Norberg",
-                    "email": "romainnorberg@gmail.com"
+                    "email": "romainnorberg@gmail.com",
+                    "role": "Maintainer, Owner, Developer"
+                },
+                {
+                    "name": "Mocking Magician",
+                    "email": "moreau.marc.web@gmail.com",
+                    "homepage": "https://github.com/MockingMagician",
+                    "role": "Developer"
                 }
             ],
             "description": "Divide a float into several parts, with distribution of any remainder",
@@ -57,7 +64,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-14T04:36:54+00:00"
+            "time": "2020-10-18T13:36:04+00:00"
         }
     ],
     "packages-dev": [],

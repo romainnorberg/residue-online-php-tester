@@ -1,7 +1,7 @@
 {
     "name": "romainnorberg/residue-online-php-tester",
     "require": {
-        "romainnorberg/residue": "v0.3.1"
+        "romainnorberg/residue": "v0.3.2"
     },
     "authors": [
         {

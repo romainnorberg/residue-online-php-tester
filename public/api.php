@@ -4,35 +4,24 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 
 use Romainnorberg\Residue\Residue;
 
-/*
-$bar = <<<EOT
-(new Romainnorberg\Residue\Residue(100))
-      ->divideBy(3)
-      ->toArray();
-EOT;
-*/
+$code = $_POST["code"];
+$code = str_replace('Residue::create', 'Romainnorberg\Residue\Residue::create', $code);
 
-$bar = $_POST["code"];
-
-$bar = str_replace('Residue::create', 'Romainnorberg\Residue\Residue::create', $bar);
+$splitMode = $_POST["splitMode"];
+$decimal = $_POST["decimal"];
 
 $eval = <<<EOT
-return $bar;
+return $code;
 EOT;
 
 $residue = eval($eval);
-$result = $residue->toArray();
+$result = $residue->toArray(constant('Romainnorberg\Residue\Residue::' . $splitMode));
 
-echo "<hr>";
-echo "Result: ";
-echo sprintf('[%s]', implode(', ', $result));
+$response = [
+    'result'    => sprintf('[%s]', implode(', ', $result)), // todo: manage array with > x items
+    'remainder' => $residue->getRemainder(),
+    'total'     => round(array_sum($result) + $residue->getRemainder(), (int)$decimal),
+];
 
-echo "<hr>";
-echo "Step remainder: ";
-echo var_dump($residue->getStepRemainder());
-
-echo "<hr>";
-
-$total = array_sum($result) + $residue->getStepRemainder();
-echo "Total:";
-echo $total;
+header('Content-Type: application/json');
+echo json_encode($response);
